@@ -1,0 +1,15 @@
+<!DOCTYPE html><html><body>
+<h1>SSC21 Admin</h1>
+<script>
+const p=prompt('Admin password');
+if(p!=='CHANGE_ME'){document.body.innerHTML='<h2>Access denied</h2>';}
+else{
+const data=JSON.parse(localStorage.getItem('ssc21Votes')||'[]');
+let totals={};
+data.forEach(d=>Object.entries(d.votes).forEach(([c,v])=>totals[c]=(totals[c]||0)+v));
+let html='<h2>Scoreboard</h2><table border=1>';
+Object.entries(totals).sort((a,b)=>b[1]-a[1]).forEach(([c,v])=>html+=`<tr><td>${c}</td><td>${v}</td></tr>`);
+html+='</table><h2>Detailed votes</h2><pre>'+JSON.stringify(data,null,2)+'</pre>';
+document.body.innerHTML+=html;
+}
+</script></body></html>
